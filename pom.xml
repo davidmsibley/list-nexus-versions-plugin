@@ -1,4 +1,3 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -21,7 +20,9 @@
 		<cida.svn.url>https://cida-svn.er.usgs.gov/repos/dev</cida.svn.url>
 	</properties>
 	<scm>
-		<developerConnection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/usgs/jenkins/list-nexus-versions-plugin/trunk</developerConnection>
+		<connection>scm:git:http://gitub.com/USGS-CIDA/list-nexus-versions-plugin.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/USGS-CIDA/list-nexus-versions-plugin.git</developerConnection>
+		<url>https://github.com/USGS-CIDA/list-nexus-versions-plugin</url>
 	</scm>
 
 	<distributionManagement>
