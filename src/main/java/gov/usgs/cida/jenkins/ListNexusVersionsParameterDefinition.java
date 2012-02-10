@@ -100,6 +100,7 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 		GetMethod GET = new GetMethod(uri);
 		HttpClient httpClient = new HttpClient();
 		try {
+			GET.setFollowRedirects(true);
 			int code = httpClient.executeMethod(GET);
 			if (200 == code) {
 				InputStream in = GET.getResponseBodyAsStream();
