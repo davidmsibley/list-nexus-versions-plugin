@@ -1,0 +1,124 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jenkins-ci.plugins</groupId>
+		<artifactId>plugin</artifactId>
+		<version>1.463</version><!-- which version of Jenkins is this plugin built against? -->
+	</parent>
+
+	<groupId>gov.usgs.cida.jenkins</groupId>
+	<artifactId>list-nexus-versions-plugin</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+	<packaging>hpi</packaging>
+	
+	<name>List Available Nexus Artifact Versions</name>
+	
+	<url>http://cida.usgs.gov/</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cida.maven.url>http://internal.cida.usgs.gov/maven</cida.maven.url>
+		<cida.svn.url>https://cida-svn.er.usgs.gov/repos/dev</cida.svn.url>
+	</properties>
+	<scm>
+		<connection>scm:git:http://gitub.com/USGS-CIDA/list-nexus-versions-plugin.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/USGS-CIDA/list-nexus-versions-plugin.git</developerConnection>
+		<url>https://github.com/USGS-CIDA/list-nexus-versions-plugin</url>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>cida-releases</id>
+			<name>CIDA Releases</name>
+			<url>${cida.maven.url}/content/repositories/cida-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>cida-snapshots</id>
+			<name>CIDA Snapshots</name>
+			<url>${cida.maven.url}/content/repositories/cida-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>CIDA Nexus</name>
+			<url>${cida.maven.url}/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>maven.jenkins-ci.org</id>
+			<url>http://maven.jenkins-ci.org/content/groups/artifacts/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>plugin-nexus</id>
+			<name>CIDA Plugin repo</name>
+			<url>${cida.maven.url}/content/groups/public/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven.jenkins-ci.org</id>
+			<url>http://maven.jenkins-ci.org/content/groups/artifacts/</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+	<developers>
+		<developer>
+			<name>David Sibley</name>
+			<email>dmsibley@usgs.gov</email>
+			<id>dmsibley</id>
+			<organization>Center for Integrated Data Analytics</organization>
+			<organizationUrl>http://cida.usgs.gov</organizationUrl>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.jenkins-ci.main</groupId>
+			<artifactId>maven-plugin</artifactId>
+		</dependency>	
+	</dependencies>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.jenkins-ci.tools
+										</groupId>
+										<artifactId>
+											maven-hpi-plugin
+										</artifactId>
+										<versionRange>
+											[1.74,)
+										</versionRange>
+										<goals>
+											<goal>test-hpl</goal>
+											<goal>validate</goal>
+											<goal>
+												resolve-test-dependencies
+											</goal>
+											<goal>insert-test</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
