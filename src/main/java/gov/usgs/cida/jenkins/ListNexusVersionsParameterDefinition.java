@@ -146,28 +146,6 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 		return vals;
 	}
 	
-	public static class VersionSorter implements Comparator<String>{
-
-		public int compare(String version1, String version2) {
-			String[] version1Splits = version1.split("-");
-			String[] version2Splits = version2.split("-");
-			if (version1Splits[0].equals(version2Splits[0])){
-				//the released version (the one without the -SNAPSHOT) is newer
-				return version1Splits.length > 1 ? -1 : 1; 
-			} else{
-				return simpleNumericCompare(version1Splits, version2Splits);
-			}
-		}
-
-		private int simpleNumericCompare(String[] version1Splits,
-				String[] version2Splits) {
-			//clean up the version numbers in case there are multiple decimals
-			String v1Clean = version1Splits[0].replace(".", ",");
-			String v2Clean = version2Splits[0].replace(".", ",");
-			return Double.valueOf(v1Clean).compareTo(Double.valueOf(v2Clean));
-		}
-	}
-
 	public int compareTo(ListNexusVersionsParameterDefinition o) {
 		int result = -1;
 		if (null != o && o.uuid.equals(this.uuid)) {
