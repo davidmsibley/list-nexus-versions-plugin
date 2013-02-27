@@ -45,7 +45,7 @@
 		</repository>
 		<repository>
 			<id>maven.jenkins-ci.org</id>
-			<url>http://maven.jenkins-ci.org/content/groups/artifacts/</url>
+			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -56,7 +56,7 @@
 		</pluginRepository>
 		<pluginRepository>
 			<id>maven.jenkins-ci.org</id>
-			<url>http://maven.jenkins-ci.org/content/groups/artifacts/</url>
+			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
 		</pluginRepository>
 	</pluginRepositories>
 	
