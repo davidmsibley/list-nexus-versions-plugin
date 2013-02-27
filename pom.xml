@@ -16,7 +16,6 @@
 	<url>http://cida.usgs.gov/</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cida.maven.url>http://internal.cida.usgs.gov/maven</cida.maven.url>
 		<cida.svn.url>https://cida-svn.er.usgs.gov/repos/dev</cida.svn.url>
 	</properties>
 	<scm>
@@ -29,12 +28,12 @@
 		<repository>
 			<id>cida-releases</id>
 			<name>CIDA Releases</name>
-			<url>${cida.maven.url}/content/repositories/cida-releases/</url>
+			<url>http://internal.cida.usgs.gov/maven/content/repositories/cida-releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>cida-snapshots</id>
 			<name>CIDA Snapshots</name>
-			<url>${cida.maven.url}/content/repositories/cida-snapshots/</url>
+			<url>http://internal.cida.usgs.gov/maven/content/repositories/cida-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	
@@ -42,7 +41,7 @@
 		<repository>
 			<id>nexus</id>
 			<name>CIDA Nexus</name>
-			<url>${cida.maven.url}/content/groups/public/</url>
+			<url>http://internal.cida.usgs.gov/maven/content/groups/public/</url>
 		</repository>
 		<repository>
 			<id>maven.jenkins-ci.org</id>
@@ -53,7 +52,7 @@
 		<pluginRepository>
 			<id>plugin-nexus</id>
 			<name>CIDA Plugin repo</name>
-			<url>${cida.maven.url}/content/groups/public/</url>
+			<url>http://internal.cida.usgs.gov/maven/content/groups/public/</url>
 		</pluginRepository>
 		<pluginRepository>
 			<id>maven.jenkins-ci.org</id>
