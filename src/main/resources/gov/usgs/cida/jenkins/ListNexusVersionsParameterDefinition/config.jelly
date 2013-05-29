@@ -9,4 +9,7 @@
 	<f:entry title="${%Project Identifier}" field="projId">
         <f:textbox name="parameter.projId" value="${instance.projId}" />
     </f:entry>
+    <f:entry title="${%Released Versions Only}" field="releasedOnly">
+    	<f:checkbox name="parameter.releasedOnly" value="${instance.releasedOnly}" />
+    </f:entry>
 </j:jelly>

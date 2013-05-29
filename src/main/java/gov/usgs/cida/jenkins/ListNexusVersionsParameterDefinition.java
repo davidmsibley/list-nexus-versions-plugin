@@ -20,6 +20,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 import org.apache.maven.artifact.versioning.ComparableVersion;
+import org.codehaus.plexus.util.StringUtils;
 import org.jvnet.localizer.ResourceBundleHolder;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -37,13 +38,15 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 	private final UUID uuid;
 	private final String projId;
 	private final String repo;
+	private final Boolean releasedOnly;
 
 	@DataBoundConstructor
-	public ListNexusVersionsParameterDefinition(String name, String repo, String projId, String uuid) {
+	public ListNexusVersionsParameterDefinition(String name, String repo, String projId, String uuid, Boolean releasedOnly) {
 		super(name, ResourceBundleHolder.get(ListNexusVersionsParameterDefinition.class).format("TagDescription"));
 		
 		this.repo = repo;
 		this.projId = projId;
+		this.releasedOnly = releasedOnly;
 		
 		if (uuid == null || uuid.length() == 0) {
 			this.uuid = UUID.randomUUID();
@@ -92,6 +95,10 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 		return this.projId;
 	}
 	
+	public Boolean getReleasedOnly() {
+		return this.releasedOnly;
+	}
+	
 	/**
 	 * Returns a list of artifact versions to be displayed in
 	 * {@code ListNexusVersionsParameterDefinition/index.jelly}.
@@ -122,7 +129,9 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 								int inner = xml.next();
 								if (XMLStreamReader.START_ELEMENT == inner && "version".equals(xml.getLocalName())) {
 									String text = xml.getElementText();
-									result.put(new ComparableVersion(text), text);
+									if (!this.releasedOnly || !StringUtils.contains(StringUtils.upperCase(text), "-SNAPSHOT")) {
+										result.put(new ComparableVersion(text), text);
+									}
 								}
 							}
 						}
