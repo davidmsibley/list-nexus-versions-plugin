@@ -16,7 +16,6 @@
 	<url>http://cida.usgs.gov/</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cida.svn.url>https://cida-svn.er.usgs.gov/repos/dev</cida.svn.url>
 	</properties>
 	<scm>
 		<connection>scm:git:http://gitub.com/USGS-CIDA/list-nexus-versions-plugin.git</connection>
