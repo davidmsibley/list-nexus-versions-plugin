@@ -6,6 +6,7 @@ import hudson.model.ParameterValue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -39,14 +40,35 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 	private final String projId;
 	private final String repo;
 	private final Boolean releasedOnly;
+	private final String nonReleasedQualifiers;
+//	private final String releasedQualifiers;
+	
+	private final List<String> excludedQualifiers;
+//	private final List<String> includedQualifiers;
 
 	@DataBoundConstructor
-	public ListNexusVersionsParameterDefinition(String name, String repo, String projId, String uuid, Boolean releasedOnly) {
+	public ListNexusVersionsParameterDefinition(String name, String repo, String projId, String uuid, Boolean releasedOnly, String nonReleasedQualifiers, String releasedQualifiers) {
 		super(name, ResourceBundleHolder.get(ListNexusVersionsParameterDefinition.class).format("TagDescription"));
 		
 		this.repo = repo;
 		this.projId = projId;
 		this.releasedOnly = releasedOnly;
+		this.nonReleasedQualifiers = nonReleasedQualifiers;
+//		this.releasedQualifiers = releasedQualifiers;
+		
+		List<String> exQualifiers = new ArrayList<String>();
+		if (StringUtils.isNotBlank(this.nonReleasedQualifiers)) {
+			String[] ex = this.nonReleasedQualifiers.split("\n");
+			exQualifiers.addAll(Arrays.asList(ex));
+		}
+		this.excludedQualifiers = Collections.unmodifiableList(exQualifiers);
+		
+//		List<String> inQualifiers = new ArrayList<String>();
+//		if (StringUtils.isNotBlank(this.releasedQualifiers)) {
+//			String[] in = this.releasedQualifiers.split("\n");
+//			inQualifiers.addAll(Arrays.asList(in));
+//		}
+//		this.includedQualifiers = Collections.unmodifiableList(inQualifiers);
 		
 		if (uuid == null || uuid.length() == 0) {
 			this.uuid = UUID.randomUUID();
@@ -99,6 +121,14 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 		return this.releasedOnly;
 	}
 	
+	public String getNonReleasedQualifiers() {
+		return nonReleasedQualifiers;
+	}
+
+//	public String getReleasedQualifiers() {
+//		return releasedQualifiers;
+//	}
+	
 	/**
 	 * Returns a list of artifact versions to be displayed in
 	 * {@code ListNexusVersionsParameterDefinition/index.jelly}.
@@ -129,7 +159,7 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 								int inner = xml.next();
 								if (XMLStreamReader.START_ELEMENT == inner && "version".equals(xml.getLocalName())) {
 									String text = xml.getElementText();
-									if (!this.releasedOnly || !StringUtils.contains(StringUtils.upperCase(text), "-SNAPSHOT")) {
+									if (!this.releasedOnly || this.checkIsReleased(text)) {
 										result.put(new ComparableVersion(text), text);
 									}
 								}
@@ -153,6 +183,18 @@ public class ListNexusVersionsParameterDefinition extends ParameterDefinition im
 		List<String> vals = new ArrayList<String>(result.values()); 
 		Collections.reverse(vals);
 		return vals;
+	}
+	
+	protected boolean checkIsReleased(String version) {
+		boolean result = true;
+		
+		for (String ex : excludedQualifiers) {
+			if (StringUtils.contains(StringUtils.upperCase(version), StringUtils.upperCase(ex))) {
+				result = false;
+			}
+		}
+		
+		return result;
 	}
 	
 	public int compareTo(ListNexusVersionsParameterDefinition o) {
